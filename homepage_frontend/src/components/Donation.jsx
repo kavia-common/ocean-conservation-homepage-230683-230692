@@ -10,9 +10,11 @@ function clampMoney(value) {
 }
 
 // PUBLIC_INTERFACE
-export default function Donation() {
+export default function Donation({ stripeDonationUrl: stripeDonationUrlProp = null }) {
   /** This is a public function. Renders donation UI and triggers redirect to configured Stripe URL. */
-  const { stripeDonationUrl } = useMemo(() => getConfig(), []);
+  const { stripeDonationUrl: stripeDonationUrlFromEnv } = useMemo(() => getConfig(), []);
+  const stripeDonationUrl = stripeDonationUrlProp || stripeDonationUrlFromEnv;
+
   const [selectedPreset, setSelectedPreset] = useState(25);
   const [customAmount, setCustomAmount] = useState("");
   const [useCustom, setUseCustom] = useState(false);
@@ -128,11 +130,16 @@ export default function Donation() {
               onClick={handleDonate}
               disabled={disabled}
               aria-disabled={disabled}
+              aria-describedby="donation-helper"
               title={disabled ? helperText : "Continue to secure checkout"}
             >
               Donate Now
             </button>
-            <p className={`note ${disabled ? "note--warn" : ""}`} role="note">
+            <p
+              id="donation-helper"
+              className={`note ${disabled ? "note--warn" : ""}`}
+              role="note"
+            >
               {helperText}
             </p>
           </div>

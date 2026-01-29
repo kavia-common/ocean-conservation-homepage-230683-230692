@@ -305,6 +305,12 @@
   line-height: 1.6;
 }
 
+.hero__cta-note {
+  margin: 0.85rem 0 0;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
 /* News */
 .news-grid {
   display: grid;

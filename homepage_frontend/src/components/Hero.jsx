@@ -5,10 +5,12 @@ import React from "react";
  * Uses the configured Elegant theme colors + subtle gradient background.
  */
 // PUBLIC_INTERFACE
-export default function Hero({ onDonateClick }) {
+export default function Hero({ onDonateClick, stripeDonationUrl }) {
   /** This is a public function. Renders mission hero with a prominent CTA. */
+  const donateDisabled = !stripeDonationUrl;
+
   return (
-    <section className="hero" aria-label="Mission">
+    <section id="mission" className="hero" aria-label="Mission">
       <div className="container hero__inner">
         <div className="hero__content">
           <p className="hero__eyebrow">Ocean Conservation</p>
@@ -27,6 +29,14 @@ export default function Hero({ onDonateClick }) {
               className="btn btn-primary btn-lg"
               onClick={onDonateClick}
               aria-label="Donate Now"
+              disabled={donateDisabled}
+              aria-disabled={donateDisabled}
+              aria-describedby="hero-donate-note"
+              title={
+                donateDisabled
+                  ? "Donations are not configured yet. Set REACT_APP_STRIPE_DONATION_URL."
+                  : "Jump to the donation section"
+              }
             >
               Donate Now
             </button>
@@ -34,6 +44,16 @@ export default function Hero({ onDonateClick }) {
               Latest updates
             </a>
           </div>
+
+          <p
+            id="hero-donate-note"
+            className={`hero__cta-note ${donateDisabled ? "note--warn" : ""}`}
+            role="note"
+          >
+            {donateDisabled
+              ? "Donations are currently disabled (missing REACT_APP_STRIPE_DONATION_URL)."
+              : "You can donate securely via Stripe in the section below."}
+          </p>
         </div>
 
         <div className="hero__card" aria-label="Impact summary">

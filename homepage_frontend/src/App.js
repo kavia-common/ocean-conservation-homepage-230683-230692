@@ -43,6 +43,9 @@ function App() {
           </div>
 
           <nav className="nav" aria-label="Primary">
+            <a className="nav__link" href="#mission">
+              Mission
+            </a>
             <a className="nav__link" href="#news">
               News
             </a>
@@ -65,10 +68,10 @@ function App() {
       </header>
 
       <main id="main">
-        <Hero onDonateClick={scrollToDonate} />
+        <Hero onDonateClick={scrollToDonate} stripeDonationUrl={config.stripeDonationUrl} />
         <NewsList />
         <div ref={donateRef}>
-          <Donation />
+          <Donation stripeDonationUrl={config.stripeDonationUrl} />
         </div>
       </main>
 
@@ -80,6 +83,11 @@ function App() {
               <span className="footer__pill">API base: {config.apiBase}</span>
             ) : (
               <span className="footer__pill">Offline mode: using local news</span>
+            )}
+            {config.stripeDonationUrl ? (
+              <span className="footer__pill">Donations enabled</span>
+            ) : (
+              <span className="footer__pill">Donations disabled (missing Stripe URL)</span>
             )}
           </p>
           <p className="footer__fineprint">
